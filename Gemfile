@@ -30,6 +30,13 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# Use carrierwave to upload file
+gem 'carrierwave'
+# Use roo to Read/Write Excel file
+gem 'roo'
+gem 'rest-client', '~> 2.0', '>= 2.0.2'
+gem 'bootstrap', '~> 4.0'
+gem 'jquery-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
