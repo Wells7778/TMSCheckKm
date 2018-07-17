@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :lists, only: [:index, :show, :create] do
     get :generate_km
   end
