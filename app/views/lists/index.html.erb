@@ -30,8 +30,11 @@
               <td><%= list.location.path.split("/").last %></td>
               <td><%= list.created_at.strftime("%F %H:%M") %></td>
               <td>
-                <%= link_to "匯入", list_generate_km_path(list), class: "btn btn-outline-primary" %>
-                <%= link_to "匯出", list_path(list, format: "xlsx"), class: "btn btn-outline-primary" %>
+                <% if list.can_export? %>
+                  <%= link_to "匯出", list_path(list, format: "xlsx"), class: "btn btn-outline-primary" %>
+                <% else %>
+                  <%= link_to "匯入", list_generate_km_path(list), class: "btn btn-primary" %>
+                <% end %>
               </td>
             </tr>
           <% end %>

@@ -59,8 +59,14 @@ class ListsController < ApplicationController
         @list.tmsrecords.create(number: hash[:number], post_code: hash[:post_code], dest: hash[:dest], driver_km: hash[:driver_km], c_km: c_km, diff_km: hash[:driver_km] - c_km, status: respond["status"])
       end
     end
-    flash[:notice] = "已匯入完成"
-    redirect_to lists_path
+    if @list.update(status: "IMPORT")
+      flash[:notice] = "已匯入完成"
+      redirect_to lists_path
+    else
+      @lists = List.all.order("created_at DESC")
+      flash.now[:alert] = "無法匯入"
+      render :index
+    end
   end
 
   private
