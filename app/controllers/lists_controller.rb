@@ -23,7 +23,7 @@ class ListsController < ApplicationController
     @list = List.find_by(id: params[:list_id])
     xlsx = Roo::Excelx.new(@list.location.path)
     url = "https://maps.googleapis.com/maps/api/directions/json"
-    key = "AIzaSyCjClGlyDKvskSUB_2W6J2EIuMbgezbFeA"
+    key = $settings['secret']
     # 讀入每一行資料
     xlsx.each(number: "報修單號", post_code: "郵遞區號", dest: "目的地地址", driver_km: "公里數") do |hash|
       if hash[:driver_km].to_i > 10 && hash[:number] != "報修單號"
