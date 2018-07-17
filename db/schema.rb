@@ -10,12 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180716122833) do
+ActiveRecord::Schema.define(version: 20180716152009) do
 
   create_table "lists", force: :cascade do |t|
     t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "tmsrecords", force: :cascade do |t|
+    t.string "number"
+    t.string "post_code"
+    t.string "dest"
+    t.integer "driver_km"
+    t.integer "list_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "c_km"
+    t.integer "diff_km"
+    t.string "status"
   end
 
 end

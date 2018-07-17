@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :lists, onlyr: [:index, :create] do
+  resources :lists, only: [:index, :show, :create] do
     get :generate_km
   end
 

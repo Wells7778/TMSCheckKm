@@ -1,0 +1,11 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Records") do |sheet|
+  # this is the head row of your spreadsheet
+  sheet.add_row %w(單號 服務地點郵遞區號 拖吊目的地 技師結案里程 預估里程 差異里程)
+
+  # each user is a row on your spreadsheet
+  @records.each do |record|
+    sheet.add_row [record.number, record.post_code, record.dest, record.driver_km, record.c_km, record.diff_km, record.status]
+  end
+end
