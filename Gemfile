@@ -38,6 +38,7 @@ gem 'roo-xls'
 gem 'rest-client', '~> 2.0', '>= 2.0.2'
 gem 'bootstrap', '~> 4.0'
 gem 'jquery-rails'
+gem 'devise'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'rubyzip', '>= 1.2.1'
@@ -50,6 +51,8 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'sqlite3'
+  gem 'capistrano-rails'
+  gem 'capistrano-passenger'
 end
 
 group :development do
