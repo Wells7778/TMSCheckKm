@@ -33,7 +33,7 @@
                 <% if list.can_export? %>
                   <%= link_to "匯出", list_path(list, format: "xlsx"), class: "btn btn-outline-primary" %>
                 <% else %>
-                  <%= link_to "匯入", list_generate_km_path(list), class: "btn btn-primary" %>
+                  <%= link_to "匯入", list_generate_km_path(list), class: "btn btn-primary", id: "import" %>
                 <% end %>
               </td>
             </tr>
@@ -43,3 +43,27 @@
     </table>
   </div>
 </div>
+<div class="modal fade" id="MsgModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        請稍候
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $("#import").on("click",function(e){
+      e.preventDefault();
+      $("#MsgModal").modal('show');
+    });
+  });
+</script>

@@ -2,7 +2,7 @@ wb = xlsx_package.workbook
 
 wb.add_worksheet(name: "Records") do |sheet|
   # this is the head row of your spreadsheet
-  sheet.add_row %w(單號 服務地點郵遞區號 拖吊目的地 技師結案里程 預估里程 差異里程)
+  sheet.add_row %w(單號 服務區域 拖吊目的地地址 技師結案里程 預估里程 差異里程 GOOGLE查詢狀態)
 
   # each user is a row on your spreadsheet
   @records.each do |record|
