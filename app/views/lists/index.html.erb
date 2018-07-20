@@ -33,7 +33,7 @@
                 <% if list.can_export? %>
                   <%= link_to "匯出", list_path(list, format: "xlsx"), class: "btn btn-outline-primary" %>
                 <% else %>
-                  <%= link_to "匯入", list_generate_km_path(list), class: "btn btn-primary", id: "import" %>
+                  <%= link_to "匯入", list_generate_km_path(list), method: :post, class: "btn btn-primary", id: "import" %>
                 <% end %>
               </td>
             </tr>
@@ -47,7 +47,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">正在計算預估里程</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

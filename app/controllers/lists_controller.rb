@@ -42,7 +42,8 @@ class ListsController < ApplicationController
           if respond["status"] == "OK"
             c_km = respond["routes"][0]["legs"][0]["distance"]["value"] / 1000
           end
-          @list.tmsrecords.create(number: hash[:number], post_code: hash[:origin_area], dest: hash[:dest], driver_km: hash[:driver_km], c_km: c_km, diff_km: hash[:driver_km] - c_km, status: respond["status"])
+          @list.tmsrecords.new(number: hash[:number], post_code: hash[:origin_area], dest: hash[:dest], driver_km: hash[:driver_km], c_km: c_km, diff_km: hash[:driver_km] - c_km, status: respond["status"])
+          @list.save
         end
       end
       if @list.update(status: "IMPORT")
