@@ -33,7 +33,7 @@ class ListsController < ApplicationController
       # 讀入每一行資料
       sheet.each(number: "報修單號", origin_area: "服務區域", dest: "拖吊地點", dest_area: "目的區域", driver_km: "拖吊里程") do |hash|
         if hash[:driver_km].to_i > 10 && hash[:origin_area][0..1] != "國道" && hash[:number] != "報修單號"
-          if hash[:dest].nil?
+          if hash[:dest_area].nil?
             @list.tmsrecords.new(number: hash[:number], post_code: hash[:origin_area], dest: hash[:dest], driver_km: hash[:driver_km], c_km: 0, diff_km: 0, status: "目的區域不可空白")
             @list.save
           else
