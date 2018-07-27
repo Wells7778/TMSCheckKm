@@ -33,17 +33,22 @@ class ListsController < ApplicationController
       # 讀入每一行資料
       sheet.each(number: "報修單號", origin_area: "服務區域", dest: "拖吊地點", dest_area: "目的區域", driver_km: "拖吊里程") do |hash|
         if hash[:driver_km].to_i > 10 && hash[:origin_area][0..1] != "國道" && hash[:number] != "報修單號"
-          c_dest = hash[:dest].split("(").first.split("/").map! {|x| x.length >= 5 ? x : "" }.join("").split("ZZZ").map! {|x| x.length >= 5 ? x : "" }.join("").split(" ").map! {|x| x.length >= 5 ? x : "" }.join("")
-          c_dest = hash[:dest_area] + c_dest
-          origin = hash[:origin_area]
-          json_rep = RestClient.get url, {params: {origin: origin, destination: c_dest , language: 'zh-TW', key: key, avoid: "highways" }}
-          respond = JSON.parse(json_rep)
-          c_km = 0
-          if respond["status"] == "OK"
-            c_km = respond["routes"][0]["legs"][0]["distance"]["value"] / 1000
+          if hash[:dest].nil?
+            @list.tmsrecords.new(number: hash[:number], post_code: hash[:origin_area], dest: hash[:dest], driver_km: hash[:driver_km], c_km: 0, diff_km: 0, status: "目的區域不可空白")
+            @list.save
+          else
+            c_dest = hash[:dest].split("(").first.split("/").map! {|x| x.length >= 5 ? x : "" }.join("").split("ZZZ").map! {|x| x.length >= 5 ? x : "" }.join("").split(" ").map! {|x| x.length >= 5 ? x : "" }.join("")
+            c_dest = hash[:dest_area] + c_dest
+            origin = hash[:origin_area]
+            json_rep = RestClient.get url, {params: {origin: origin, destination: c_dest , language: 'zh-TW', key: key, avoid: "highways" }}
+            respond = JSON.parse(json_rep)
+            c_km = 0
+            if respond["status"] == "OK"
+              c_km = respond["routes"][0]["legs"][0]["distance"]["value"] / 1000
+            end
+            @list.tmsrecords.new(number: hash[:number], post_code: hash[:origin_area], dest: hash[:dest], driver_km: hash[:driver_km], c_km: c_km, diff_km: hash[:driver_km] - c_km, status: respond["status"])
+            @list.save
           end
-          @list.tmsrecords.new(number: hash[:number], post_code: hash[:origin_area], dest: hash[:dest], driver_km: hash[:driver_km], c_km: c_km, diff_km: hash[:driver_km] - c_km, status: respond["status"])
-          @list.save
         end
       end
       if @list.update(status: "IMPORT")
