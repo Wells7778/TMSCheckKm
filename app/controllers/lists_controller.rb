@@ -1,6 +1,6 @@
 class ListsController < ApplicationController
   def index
-    @lists = List.all.order("created_at DESC")
+    @lists = List.all.order("created_at DESC").page(params[:page]).per(10)
     @list = List.new
   end
 
