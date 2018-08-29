@@ -36,6 +36,9 @@ class ListsController < ApplicationController
           if hash[:dest_area].nil?
             @list.tmsrecords.new(number: hash[:number], post_code: hash[:origin_area], dest: hash[:dest], driver_km: hash[:driver_km], c_km: 0, diff_km: 0, status: "目的區域不可空白")
             @list.save
+          elsif hash[:dest].nil?
+            @list.tmsrecords.new(number: hash[:number], post_code: hash[:origin_area], dest: hash[:dest], driver_km: hash[:driver_km], c_km: 0, diff_km: 0, status: "拖吊地點不可空白")
+            @list.save
           else
             c_dest = hash[:dest].split("(").first.split("/").map! {|x| x.length >= 5 ? x : "" }.join("").split("ZZZ").map! {|x| x.length >= 5 ? x : "" }.join("").split(" ").map! {|x| x.length >= 5 ? x : "" }.join("")
             c_dest = hash[:dest_area] + c_dest
